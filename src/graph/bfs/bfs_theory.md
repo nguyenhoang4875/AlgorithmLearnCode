@@ -6,7 +6,7 @@ edge of a graph. It runs with a time complexity `O(V+E)` and is often used as a 
 The BFS algorithm is particularly useful for one thing: finding the shorted path on unweighted graph
 
 ##Sudo code:
-```js
+```shell
 # Global/class scope variables
 n = number of nodes in the graph
 g = adjacency list representing unweighted graph

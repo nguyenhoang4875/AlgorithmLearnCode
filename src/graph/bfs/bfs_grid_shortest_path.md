@@ -2,7 +2,7 @@
 ## Direction Vectors
 This makes it very easy to access neighbouring cells from the current row-column position:
 ### Sudo code:
-```
+```shell
 # Define the direction vectors for 
 # north, south, east and west
 dr = [-1, +1,  0,  0]
@@ -14,7 +14,7 @@ for(int i =0; i< 4; i++):
     
     # Skip invalid cells. Assume R and 
     # C for the number of row and coluns
-    if rr < 0 or cc < 0: contiune
+    if rr < 0 or cc < 0: continue
     if rr >= R or cc >= C: continue
     #(rr, cc) is a neighbouring cells of (r, c)
     
@@ -22,7 +22,7 @@ for(int i =0; i< 4; i++):
 
 ## Shortest Path on a Grid
 ### Sudo code:
-```
+```shell
 # Gloabl/class scope varibales
 R, C = ... # R = number of rows, C = number of columns
 m = ...    # Input character matrix of size R x C

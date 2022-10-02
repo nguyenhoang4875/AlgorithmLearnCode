@@ -1,6 +1,8 @@
+package cptc;
+
 import java.util.Scanner;
 
-public class Main {
+public class Rooftop {
 	static int N;//Number of buildings
 	static int H[] = new int [80010];//Height of buildings
 	static int next[] = new int [80010];

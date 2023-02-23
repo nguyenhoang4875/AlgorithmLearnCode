@@ -1,61 +1,56 @@
 package cptc;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.StringTokenizer;
-import java.util.TreeMap;
+import static java.lang.Integer.parseInt;
+
+import java.io.*;
+import java.util.*;
 
 public class PopularityPoll {
-    int N;
-    int M;
-    Comparator<Map.Entry<String, Integer>> comparator = new Comparator<Map.Entry<String, Integer>>() {
-        @Override
-        public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-            if (o1.getValue() != o2.getValue()) {
-                return o2.getValue() - o1.getValue();
-            } else {
-                return o1.getKey().compareTo(o2.getKey());
-            }
-        }
-    };
-    Map<String, Integer> candidates = new TreeMap<>();
-
-
-    private void input() throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        N = Integer.parseInt(br.readLine());
-        String row = br.readLine();
-        StringTokenizer tokenizer = new StringTokenizer(row);
-
-        for (int i = 0; i < N; i++) {
-            candidates.put(tokenizer.nextToken(), 0);
+        StringTokenizer st;
+        Map<String, Integer> mapName = new HashMap<>();
+        int n = parseInt(br.readLine());
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < n; i++) {
+            mapName.put(st.nextToken(), i);
+        }
+        HashMap<String, Integer> mapScore = new HashMap<>();
+        int m = parseInt(br.readLine());
+        for (int i = 0; i < m; i++) {
+            st = new StringTokenizer(br.readLine());
+            String key = st.nextToken();
+            if (mapName.containsKey(key)) {
+                int val = parseInt(st.nextToken());
+                mapScore.put(key, mapScore.getOrDefault(key, 0) + val);
+            }
         }
 
-        M = Integer.parseInt(br.readLine());
-
-        String name;
-        Integer score;
-        for (int i = 0; i < M; i++) {
-            row = br.readLine();
-            tokenizer = new StringTokenizer(row);
-            name = tokenizer.nextToken();
-            if (candidates.containsKey(name)) {
-                score = Integer.parseInt(tokenizer.nextToken());
-                Integer oldScore = candidates.get(name);
-                oldScore+= score;
-                candidates.put(name, oldScore + score);
-            }
+        List<Node> ans = new ArrayList<>();
+        for (String key : mapScore.keySet()) {
+            Node node = new Node(key, mapName.get(key), mapScore.get(key));
+            ans.add(node);
+        }
+        ans.sort((e1, e2) -> {
+            if (e1.score == e2.score) return e1.id - e2.id;
+            else return e2.score - e1.score;
+        });
+        for (int i = 0; i < 3; i++) {
+            String str = ans.get(i).name + " " + ans.get(i).score;
+            System.out.println(str);
         }
 
     }
 
-    public static void main(String[] args) throws IOException {
-        PopularityPoll m = new PopularityPoll();
-        m.input();
-        m.candidates.entrySet().stream().sorted(m.comparator).limit(3).
-                forEach(x -> System.out.println(x.getKey() + " " + x.getValue()));
+    static class Node {
+        String name;
+        int id;
+        int score;
+
+        public Node(String name, int id, int score) {
+            this.name = name;
+            this.id = id;
+            this.score = score;
+        }
     }
 }
